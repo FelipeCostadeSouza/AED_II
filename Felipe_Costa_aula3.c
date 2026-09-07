@@ -155,28 +155,28 @@ int main() {
     }
     clock_t fim = clock();
     double tempo_execucao = (double)(fim - inicio) / CLOCKS_PER_SEC;
-    printf("Tempo de processamento (Shellsort iterativo):  %.6f s (%.3f ms)\n", tempo_execucao);
+    printf("Tempo de processamento (Shellsort iterativo):  %.6f s\n", tempo_execucao);
 
     
     inicio = clock();
     heapSortIterativo(v, T);
     fim = clock();
     tempo_execucao = (double)(fim - inicio) / CLOCKS_PER_SEC;
-    printf("Tempo de processamento (HeapSort Iterativo):  %.6f s (%.3f ms)\n", tempo_execucao);
+    printf("Tempo de processamento (HeapSort Iterativo):  %.6f s\n", tempo_execucao);
 
     
     inicio = clock();
     quickSortRecursivo(v2, 0, T - 1);
     fim = clock();
     tempo_execucao = (double)(fim - inicio) / CLOCKS_PER_SEC;
-    printf("Tempo de processamento (QuickSort Recursivo): %.6f s (%.3f ms)\n", tempo_execucao);
+    printf("Tempo de processamento (QuickSort Recursivo): %.6f s\n", tempo_execucao);
 
     
     inicio = clock();
     quickSortIterativo(v3, 0, T - 1);
     fim = clock();
     tempo_execucao = (double)(fim - inicio) / CLOCKS_PER_SEC;
-    printf("Tempo de processamento (QuickSort Iterativo): %.6f s (%.3f ms)\n", tempo_execucao);
+    printf("Tempo de processamento (QuickSort Iterativo): %.6f s\n", tempo_execucao);
 
     
     free(vetor);
