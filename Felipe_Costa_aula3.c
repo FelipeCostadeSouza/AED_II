@@ -185,4 +185,4 @@ int main() {
     free(v3);
 
     return 0;
-}
+}//usei ia para corrigir o heapsort e os quicksorts
