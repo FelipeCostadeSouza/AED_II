@@ -129,25 +129,18 @@ int main() {
     }
 
     for (int i = 0; i < T; i++) {
-        vetor[i] = T - i;
+        vetor[i] = rand(); 
     }
 
     int *v  = (int *)malloc(T * sizeof(int)); 
     int *v2 = (int *)malloc(T * sizeof(int)); 
     int *v3 = (int *)malloc(T * sizeof(int)); 
 
-    if (v == NULL || v2 == NULL || v3 == NULL) {
-        printf("Erro ao alocar memória para as cópias.\n");
-        free(vetor); free(v); free(v2); free(v3);
-        return 1;
-    }
-
-    for (int i = 0; i < T; i++) {
-        vetor[i] = rand(); 
-    }
-
+    for(int i =0; i<T; i++){
+        v3[i]=v2[i]=v[i]=vetor[i];
+    }   
     
-    clock_t inicio = clock();
+    clock_t inicio = clock();//shellsort
     for (int gap = 1000; gap > 0; gap /= 2) {
         for (int i = gap; i < T; i++) {
             int temp = vetor[i];
