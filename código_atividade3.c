@@ -12,64 +12,64 @@ void trocar(int *a, int *b) {
 }
 
 
-void heapify_iterativo(int arr[], int n, int i) {
-    int pai = i;
+void heapify_iterativo(int v[], int n, int i) {
+    int p = i;
     while (1) {
-        int maior = pai;
-        int esq = 2 * pai + 1;
-        int dir = 2 * pai + 2;
+        int maior = p;
+        int esq = 2 * p + 1;
+        int dir = 2 * p + 2;
 
-        if (esq < n && arr[esq] > arr[maior])
+        if (esq < n && v[esq] > v[maior])
             maior = esq;
-        if (dir < n && arr[dir] > arr[maior])
+        if (dir < n && v[dir] > v[maior])
             maior = dir;
 
-        if (maior != pai) {
-            trocar(&arr[pai], &arr[maior]);
-            pai = maior;
+        if (maior != p) {
+            trocar(&v[p], &v[maior]);
+            p = maior;
         } else {
-            break;
+            return;
         }
     }
 }
 
-void heapSortIterativo(int arr[], int n) {
+void heapSortIterativo(int v[], int n) {
    
     for (int i = n / 2 - 1; i >= 0; i--) {
-        heapify_iterativo(arr, n, i);
+        heapify_iterativo(v, n, i);
     }
    
     for (int i = n - 1; i > 0; i--) {
-        trocar(&arr[0], &arr[i]);
-        heapify_iterativo(arr, i, 0);
+        trocar(&v[0], &v[i]);
+        heapify_iterativo(v, i, 0);
     }
 }
 
 
-void quickSortRecursivo(int arr[], int inicio, int fim) {
+void quickSortRecursivo(int v[], int inicio, int fim) {
     if (inicio < fim) {
     
-        int pivo = arr[(inicio + fim) / 2];
+        int pivo = v[(inicio + fim) / 2];
         int i = inicio;
         int j = fim;
 
         while (i <= j) {
-            while (arr[i] < pivo) i++;
-            while (arr[j] > pivo) j--;
+            while (v[i] < pivo) i++;
+            while (v[j] > pivo) j--;
             if (i <= j) {
-                trocar(&arr[i], &arr[j]);
+                trocar(&v[i], &v[j]);
                 i++;
                 j--;
             }
         }
 
-        quickSortRecursivo(arr, inicio, j);
-        quickSortRecursivo(arr, i, fim);
+        quickSortRecursivo(v, inicio, j);
+        quickSortRecursivo(v, i, fim);
     }
 }
 
 
-void quickSortIterativo(int arr[], int inicio, int fim) {
+void quickSortIterativo(int v[], int inicio, int fim) {
     
     int *pilha = (int *)malloc((fim - inicio + 1) * sizeof(int));
     if (pilha == NULL) return;
@@ -87,15 +87,15 @@ void quickSortIterativo(int arr[], int inicio, int fim) {
 
         if (esq < dir) {
            
-            int pivo = arr[(esq + dir) / 2];
+            int pivo = v[(esq + dir) / 2];
             int i = esq;
             int j = dir;
 
             while (i <= j) {
-                while (arr[i] < pivo) i++;
-                while (arr[j] > pivo) j--;
+                while (v[i] < pivo) i++;
+                while (v[j] > pivo) j--;
                 if (i <= j) {
-                    trocar(&arr[i], &arr[j]);
+                    trocar(&v[i], &v[j]);
                     i++;
                     j--;
                 }
