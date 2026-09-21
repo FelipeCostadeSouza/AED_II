@@ -210,7 +210,7 @@ if __name__ == '__main__':
 
     algoritmos = [
         ("Intercalação Balanceada", intercalacao_balanceada),
-        ("Quicksort Externo Iterativo", quicksort_externo)
+        ("Quicksort Externo", quicksort_externo)
     ]
 
     for nome, algo_fn in algoritmos:
