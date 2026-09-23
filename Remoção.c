@@ -1,46 +1,56 @@
+typedef struct arv {
+    int info;
+    struct arv *esq1; 
+    struct arv *dir1;
+}TArvABB;
+typedef TArvABB *PArvABB;
+
+
 PArvABB remover(PArvABB a, int x) {
 	PArvABB t,pai;
-	if(a==NULL) {
+	if(a==NULL) {    //arvore vazia
 		return NULL;
 	}
 	if(x<a->info) {
-		a->esq1=remover(a->esq1, x);
+		a->esq1=remover(a->esq1, x);  
 	} else if(x>a->info) {
-		a->dir1=remover(a->dir1, x);
+		a->dir1=remover(a->dir1, x);    //percorre a árvore até encontrar o nó
 	} else {
 		if(a->esq1==NULL && a->dir1==NULL) {
 			free(a);
-			return NULL;
+			return NULL;  //remove se for uma folha
 		}
-		if(a->dir1==NULL) {
-			t=a->esq1;
-			free(a);
-			return t;
+		if(a->dir1==NULL) {   //nó só possui um filho a esquerda
+			t=a->esq1;       //guardo o filho a esquerda
+			free(a);         //removo o nó
+			return t;        //retorno o filho a esquerda para se conectar ao pai de a
 		}
-		if(a->esq1==NULL) {
+		if(a->esq1==NULL) {   //mesma coisa só que o inverso
 			t=a->dir1;
 			free(a);
 			return t;
 		}
-		pai=a;
+		pai=a;      
 		t=a->esq1;
-		while(t->dir1!=NULL) {
+		while(t->dir1!=NULL) {   //procuro o filho mais a direita na sub árvore esquerda
 			pai=t;
 			t=t->dir1;
 		}
-		a->info=t->info;
-		if(pai==a) {
-			pai->esq1=t->esq1;
+		a->info=t->info;     //troco as informações, agora t é quem devo remover
+		if(pai==a) {           //o filho a esquerda de a não possui nenhum filho a direita
+			pai->esq1=t->esq1;  //a deve receber os filhos a esquerda de t
 		} else {
-			pai->dir1=t->esq1;
+			pai->dir1=t->esq1;    //o último caso, em a deve receber todos os filhos a esquerda de t para não perde-los
 		}
-		free(t);
+		free(t);           //remove o nó
 		return a;
 	}
 }
-/////////////////////////////////////////////////////////////////////////
-4
-	////////////////////////////////////////////////////
+
+
+//Código do exercício 4, usei ia para achar um código para usar e sua fonte
+
+
 #include <stdio.h>
 #include <stdlib.h>
 
