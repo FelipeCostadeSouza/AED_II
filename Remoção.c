@@ -1,4 +1,4 @@
-typedef struct arv {
+typedef struct arv {     //feito por mim semestre passado
     int info;
     struct arv *esq1; 
     struct arv *dir1;
