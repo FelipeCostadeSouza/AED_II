@@ -112,3 +112,33 @@ void Quicksort(int v[], int N){
         j--;
     }
 }
+
+void insere(int x, int Heap [], int ult) {
+    ult = ult+1; //ultimo índice do heap antes da inserção (no ex. ult = 9+1=10)
+    int i = ult;
+    while ((i/2) && (x > Heap[i/2])) {
+        Heap[i] = Heap [i/2];
+        i = i/2;
+    }
+    Heap[i] = x;
+}
+
+void remover(int Heap[], int ult) {
+int remove = Heap[1];
+int x = Heap[ult];
+ult = ult-1;
+int i = 1;
+While ((2i <= ult) && (x < Heap[2i] || x < Heap[2i+1])) {
+if(Heap[2i] > Heap[2i+1]) {
+Heap[i] = Heap[2i];
+i = 2i;
+
+} else {
+
+Heap[i] = Heap[2i+1];
+i=2i+1;
+
+}
+}
+Heap[i] = x;
+}
