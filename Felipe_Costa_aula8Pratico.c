@@ -416,6 +416,21 @@ Node* insert_node(Node* node, int key) {
     return node;
 }
 
+int alturaVP(Node1 *node, Node1 *NIL) {
+    if (node == NIL || node == NULL) {
+        return -1;
+    }
+
+    int alturaEsq = alturaVP(node->left, NIL);
+    int alturaDir = alturaVP(node->right, NIL);
+
+    if (alturaEsq > alturaDir) {
+        return alturaEsq + 1;
+    } else {
+        return alturaDir + 1;
+    }
+}
+
 int main() {
     int a=10000;
     int v[a];
@@ -536,17 +551,29 @@ int main() {
     double tempo_VP1 = (double)(fim_VP1 - inicio_VP1) / CLOCKS_PER_SEC;
     printf("Tempo de busca 50 arvore Rubro-Negra: %f segundos\n", tempo_VP1);
     
+    clock_t inicio_VP2 = clock();
+    Node1 *C3 = searchVP(treeVP, 50);
+    clock_t fim_VP2 = clock();
+    double tempo_VP2 = (double)(fim_VP2 - inicio_VP2) / CLOCKS_PER_SEC;
+    printf("Tempo de busca 50 arvore Rubro-Negra: %f segundos\n", tempo_VP2);
+    
     int h = height(A2->right);
     int h1 = height(A2->left);
     
-    printf("Altura sub-esquerda: %d \n", h1);
-    printf("Altura sub-direita: %d \n", h);
+    printf("Altura sub-esquerda AVL: %d \n", h1);
+    printf("Altura sub-direita AVL: %d \n", h);
     
     int x = altura(A->dir1);
     int x1 = altura(A->esq1);
     
     printf("Altura sub-esquerda: %d \n", x1);
     printf("Altura sub-direita: %d \n", x);
+    
+    int Y = alturaVP(treeVP->root->left, treeVP->NIL);
+    int Y1 = alturaVP(treeVP->root->right, treeVP->NIL);
+    
+    printf("Altura sub-esquerda VP: %d \n", Y);
+    printf("Altura sub-direita VP: %d \n", Y1);
 
     return 0;
 }
