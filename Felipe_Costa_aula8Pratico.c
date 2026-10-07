@@ -8,9 +8,9 @@ typedef enum {
 } Color;
 
 typedef struct arv2 {
-	int info;
-	struct arv2 *esq1;
-	struct arv2 *dir1;
+    int info;
+    struct arv2 *esq1;
+    struct arv2 *dir1;
 } TArvABB;
 typedef TArvABB *PArvABB;
 
@@ -34,7 +34,7 @@ typedef struct RedBlackTree {
     Node1 *NIL; 
 } RedBlackTree;
 
-Node1* createNode(int data, Node *NIL) {
+Node1* createNode(int data, Node1 *NIL) {
     Node1 *newNode = (Node1*)malloc(sizeof(Node1));
     newNode->data = data;
     newNode->color = RED;
@@ -44,7 +44,7 @@ Node1* createNode(int data, Node *NIL) {
     return newNode;
 }
 
-void leftRotate(RedBlackTree *tree, Node1 *x) {
+void leftRotateVP(RedBlackTree *tree, Node1 *x) {
     Node1 *y = x->right;
     x->right = y->left;
 
@@ -65,7 +65,7 @@ void leftRotate(RedBlackTree *tree, Node1 *x) {
     x->parent = y;
 }
 
-void rightRotate(RedBlackTree *tree, Node1 *x) {
+void rightRotateVP(RedBlackTree *tree, Node1 *x) {
     Node1 *y = x->left;
     x->left = y->right;
 
@@ -86,31 +86,27 @@ void rightRotate(RedBlackTree *tree, Node1 *x) {
     x->parent = y;
 }
 
-void fixInsert(RedBlackTree *tree, Node *k) {
+void fixInsert(RedBlackTree *tree, Node1 *k) {
     while (k != tree->root && k->parent->color == RED) {
         if (k->parent == k->parent->parent->left) {
-            Node *uncle = k->parent->parent->right;
+            Node1 *uncle = k->parent->parent->right;
 
             if (uncle->color == RED) {
-                
                 k->parent->color = BLACK;
                 uncle->color = BLACK;
                 k->parent->parent->color = RED;
                 k = k->parent->parent;
             } else {
                 if (k == k->parent->right) {
-                    
                     k = k->parent;
-                    leftRotate(tree, k);
+                    leftRotateVP(tree, k);
                 }
-                
                 k->parent->color = BLACK;
                 k->parent->parent->color = RED;
-                rightRotate(tree, k->parent->parent);
+                rightRotateVP(tree, k->parent->parent);
             }
         } else {
-           
-            Node *uncle = k->parent->parent->left;
+            Node1 *uncle = k->parent->parent->left;
 
             if (uncle->color == RED) {
                 k->parent->color = BLACK;
@@ -120,11 +116,11 @@ void fixInsert(RedBlackTree *tree, Node *k) {
             } else {
                 if (k == k->parent->left) {
                     k = k->parent;
-                    rightRotate(tree, k);
+                    rightRotateVP(tree, k);
                 }
                 k->parent->color = BLACK;
                 k->parent->parent->color = RED;
-                leftRotate(tree, k->parent->parent);
+                leftRotateVP(tree, k->parent->parent);
             }
         }
     }
@@ -181,9 +177,6 @@ void insert(RedBlackTree *tree, int data) {
     fixInsert(tree, node);
 }
 
-
-
-
 Node1* searchVP(RedBlackTree *tree, int data) {
     Node1 *current = tree->root;
     while (current != tree->NIL) {
@@ -198,7 +191,6 @@ Node1* searchVP(RedBlackTree *tree, int data) {
     return NULL;
 }
 
-
 Node* searchAVL(Node *a, int x) {
     while (a != NULL && a->key != x) {
         if (x < a->key) {
@@ -210,21 +202,19 @@ Node* searchAVL(Node *a, int x) {
     return a;
 }
 
-
 PArvABB inserirABB(PArvABB a, int x) {
-
-	if(a==NULL) {
-		PArvABB novo=(PArvABB)malloc(sizeof(TArvABB));
-		novo->info=x;
-		novo->esq1=novo->dir1=NULL;
-		return novo;
-	}
-	if(x<a->info) {
-		a->esq1=inserirABB(a->esq1, x);
-	} else {
-		a->dir1=inserirABB(a->dir1, x);
-	}
-	return a;
+    if(a==NULL) {
+        PArvABB novo=(PArvABB)malloc(sizeof(TArvABB));
+        novo->info=x;
+        novo->esq1=novo->dir1=NULL;
+        return novo;
+    }
+    if(x<a->info) {
+        a->esq1=inserirABB(a->esq1, x);
+    } else {
+        a->dir1=inserirABB(a->dir1, x);
+    }
+    return a;
 }
 
 PArvABB searchABB(PArvABB a, int x) {
@@ -239,65 +229,59 @@ PArvABB searchABB(PArvABB a, int x) {
 }
 
 PArvABB remover(PArvABB a, int x) {
-	PArvABB t,pai;
-	if(a==NULL) {
-		return NULL;
-	}
-	if(x<a->info) {
-		a->esq1=remover(a->esq1, x);
-	} else if(x>a->info) {
-		a->dir1=remover(a->dir1, x);
-	} else {
-		if(a->esq1==NULL && a->dir1==NULL) {
-			free(a);
-			return NULL;
-		}
-		if(a->dir1==NULL) {
-			t=a->esq1;
-			free(a);
-			return t;
-		}
-		if(a->esq1==NULL) {
-			t=a->dir1;
-			free(a);
-			return t;
-		}
-		pai=a;
-		t=a->esq1;
-		while(t->dir1!=NULL) {
-			pai=t;
-			t=t->dir1;
-		}
-		a->info=t->info;
-		if(pai==a) {
-			pai->esq1=t->esq1;
-		} else {
-			pai->dir1=t->esq1;
-		}
-		free(t);
-		return a;
-	}
+    PArvABB t,pai;
+    if(a==NULL) {
+        return NULL;
+    }
+    if(x<a->info) {
+        a->esq1=remover(a->esq1, x);
+    } else if(x>a->info) {
+        a->dir1=remover(a->dir1, x);
+    } else {
+        if(a->esq1==NULL && a->dir1==NULL) {
+            free(a);
+            return NULL;
+        }
+        if(a->dir1==NULL) {
+            t=a->esq1;
+            free(a);
+            return t;
+        }
+        if(a->esq1==NULL) {
+            t=a->dir1;
+            free(a);
+            return t;
+        }
+        pai=a;
+        t=a->esq1;
+        while(t->dir1!=NULL) {
+            pai=t;
+            t=t->dir1;
+        }
+        a->info=t->info;
+        if(pai==a) {
+            pai->esq1=t->esq1;
+        } else {
+            pai->dir1=t->esq1;
+        }
+        free(t);
+        return a;
+    }
 }
 
 int altura(PArvABB a) {
-	if(a==NULL) {
-		return -1;
-	}
+    if(a==NULL) {
+        return -1;
+    }
 
-	int alturaesq=altura(a->esq1);
+    int alturaesq=altura(a->esq1);
+    int alturadir=altura(a->dir1);
 
-	int alturadir=altura(a->dir1);
-
-	if(alturaesq>alturadir) {
-
-		return (alturaesq + 1);
-
-	} else {
-
-		return (alturadir+1);
-
-	}
-
+    if(alturaesq>alturadir) {
+        return (alturaesq + 1);
+    } else {
+        return (alturadir+1);
+    }
 }
 
 void buscaBinaria(int v[], int x) {
@@ -305,7 +289,6 @@ void buscaBinaria(int v[], int x) {
     int fim = 10000 - 1;
 
     while (inicio <= fim) {
-        
         int meio = inicio + (fim - inicio) / 2;
 
         if (v[meio] == x) {
@@ -339,7 +322,6 @@ void shellsort(int a[]){
 }
 
 void busca(int v[], int x){
-    
     for(int i=0; i<10000; i++){
         if(v[i]==x){
             printf("encontrado\n");
@@ -398,7 +380,6 @@ Node* rotate_left(Node *x) {
     return y;
 }
 
-
 Node* insert_node(Node* node, int key) {
     if (node == NULL) {
         return create_node(key);
@@ -409,7 +390,6 @@ Node* insert_node(Node* node, int key) {
     } else if (key > node->key) {
         node->right = insert_node(node->right, key);
     } else {
- 
         return node;
     }
 
@@ -485,30 +465,34 @@ int main() {
     clock_t fim_AVL = clock();
     double tempo_AVL = (double)(fim_AVL - inicio_AVL) / CLOCKS_PER_SEC;
     printf("Tempo de inserção árvore AVL: %f segundos\n", tempo_AVL);
-    
+
+    RedBlackTree *treeVP = createRedBlackTree();
+
+    clock_t inicio_VP = clock();
+    for (int i = 0; i < a; i++) {
+        insert(treeVP, v[i]);
+    }
+    clock_t fim_VP = clock();
+    double tempo_VP = (double)(fim_VP - inicio_VP) / CLOCKS_PER_SEC;
+    printf("Tempo de inserção árvore Rubro-Negra: %f segundos\n", tempo_VP);
+
     clock_t inicio_B = clock();
-    
     busca(v, 50);
-    
     clock_t fim_B = clock();
     double tempo_B = (double)(fim_B - inicio_B) / CLOCKS_PER_SEC;
     printf("Tempo de busca 50 vetor aleatorio: %f segundos\n", tempo_B);
     
     clock_t inicio_B1 = clock();
-    
     busca(v, 5000);
-    
     clock_t fim_B1 = clock();
     double tempo_B1 = (double)(fim_B1 - inicio_B1) / CLOCKS_PER_SEC;
     printf("Tempo de busca 5000 vetor aleatorio: %f segundos\n", tempo_B1);
-    
     
     clock_t inicio_v1B = clock();
     buscaBinaria(v1, 50);
     clock_t fim_v1B = clock();
     double tempo_v1B = (double)(fim_v1B - inicio_v1B) / CLOCKS_PER_SEC;
     printf("Tempo de busca 50 vetor ordenado: %f segundos\n", tempo_v1B);
-    
     
     clock_t inicio_v1B2 = clock();
     buscaBinaria(v1, 5000);
@@ -526,7 +510,6 @@ int main() {
     printf("Tempo de busca 50 arvore: %f segundos\n", tempo_ab);
     
     clock_t inicio_ab1 = clock();
-    
     B = searchABB(A, 5000);
     clock_t fim_ab1 = clock();
     double tempo_ab1 = (double)(fim_ab1 - inicio_ab1) / CLOCKS_PER_SEC;
@@ -536,28 +519,34 @@ int main() {
     Node *C1 = NULL;
     
     clock_t inicio_AVL1 = clock();
-    
     C1 = searchAVL(A2, 50);
-    
     clock_t fim_AVL1 = clock();
     double tempo_AVL1 = (double)(fim_AVL1 - inicio_AVL1) / CLOCKS_PER_SEC;
     printf("Tempo de busca 50 arvoreAVL: %f segundos\n", tempo_AVL1);
     
     clock_t inicio_AVL2 = clock();
-    
-    B1 =  searchAVL(A2, 5000);
-    
+    B1 = searchAVL(A2, 5000);
     clock_t fim_AVL2 = clock();
     double tempo_AVL2 = (double)(fim_AVL2 - inicio_AVL2) / CLOCKS_PER_SEC;
     printf("Tempo de busca 5000 arvoreAVL: %f segundos\n", tempo_AVL2);
     
+    clock_t inicio_VP1 = clock();
+    Node1 *C2 = searchVP(treeVP, 50);
+    clock_t fim_VP1 = clock();
+    double tempo_VP1 = (double)(fim_VP1 - inicio_VP1) / CLOCKS_PER_SEC;
+    printf("Tempo de busca 50 arvore Rubro-Negra: %f segundos\n", tempo_VP1);
     
     int h = height(A2->right);
     int h1 = height(A2->left);
     
     printf("Altura sub-esquerda: %d \n", h1);
     printf("Altura sub-direita: %d \n", h);
-
+    
+    int x = altura(A->dir1);
+    int x1 = altura(A->esq1);
+    
+    printf("Altura sub-esquerda: %d \n", x1);
+    printf("Altura sub-direita: %d \n", x);
 
     return 0;
 }
