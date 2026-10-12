@@ -6,7 +6,7 @@
 #define M 100 // Maximum degree of the B-tree
 
 //As funções abaixo foram pegas/inspiradas pelo código disponibilizado no GeeksforGeeks sobre árvore-B
-
+//https://www.geeksforgeeks.org/c/implementation-of-b-tree-in-c/
 struct BTreeNode {
     int num_keys; // Number of keys currently in the node
     int keys[M-1]; // Array of keys
