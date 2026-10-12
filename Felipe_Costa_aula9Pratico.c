@@ -3,7 +3,9 @@
 #include <stdbool.h>
 #include <time.h>
 
-#define M 4 // Maximum degree of the B-tree
+#define M 100 // Maximum degree of the B-tree
+
+//As funções abaixo foram pegas/inspiradas pelo código disponibilizado no GeeksforGeeks sobre árvore-B
 
 struct BTreeNode {
     int num_keys; // Number of keys currently in the node
@@ -193,12 +195,13 @@ int main() {
     
     clock_t fim_v = clock();
     double tempo_v = (double)(fim_v - inicio_v) / CLOCKS_PER_SEC;
-    printf("Tempo de inserção vetor aleatorio: %f segundos\n", tempo_v);
     
     printKeysPerNode(root);
     
+    printf("Tempo de inserção árvore-B: %f segundos\n", tempo_v);
+    
     printf("Total de chaves na árvore: %d\n", countTotalKeys(root));
-    printf("%d", getHeight(root));
+    printf("altura: %d", getHeight(root));
     
 
     return 0;
