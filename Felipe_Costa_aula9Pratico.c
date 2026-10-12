@@ -182,7 +182,6 @@ int countTotalKeys(struct BTreeNode *root) {
 int main() {
     struct BTreeNode *root = NULL;
 
-    insert(&root, 10);
     int temp = 0;
     
     clock_t inicio_v = clock();
