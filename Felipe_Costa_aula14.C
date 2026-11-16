@@ -116,16 +116,15 @@ int main() {
     chrono::duration<double, milli> duration2 = end2 - start2;
     
     auto startSearch1 = chrono::high_resolution_clock::now();
-    for (int key : keys) {
-        hashTable.search(key);
-    }
+    
+    hashTable.search(999);
+    
     auto endSearch1 = chrono::high_resolution_clock::now();
     chrono::duration<double, milli> durationSearch1 = endSearch1 - startSearch1;
 
     auto startSearch2 = chrono::high_resolution_clock::now();
-    for (int key : keys) {
-        searchLinear(resultLinear, key);
-    }
+    searchLinear(resultLinear, 999);
+    
     auto endSearch2 = chrono::high_resolution_clock::now();
     chrono::duration<double, milli> durationSearch2 = endSearch2 - startSearch2;
 
